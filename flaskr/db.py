@@ -1,5 +1,5 @@
 import sqlite3
-
+import logging
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
@@ -11,10 +11,13 @@ def init_app(app):
 
 
 def init_db():
+    schema_name ='schema.sql'
+    #logging.INFO("Create/reset the db using")
     db = get_db()
 
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
+
 
 def get_db():
     if 'db' not in g:
